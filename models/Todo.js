@@ -16,12 +16,6 @@ const Todo = dbase.define('todo',
         allowNull: false
     },
     description: {type: DataTypes.STRING, },
-    createAt: {
-        type: Sequelize.DATE, field :'created_at'
-    },
-    updateAt:{
-         type: Sequelize.DATE, field :'updated_at'
-    },
 },
 {
     freezeTableName: true ,
