@@ -1,9 +1,9 @@
-const Todo = require('../models/Todo.js');
+const User = require('../models/User.js');
 
 // SHOW ALL DATA
-exports.todos = async (req, res) => {
+exports.getAllUsers = async (req, res) => {
     try {
-        const response = await Todo.findAll({ order: [['id', 'DESC']] });
+        const response = await User.findAll({ order: [['id', 'DESC']] });
         res.status(200).json({
             status: "200",
             message: "Data retrieved successfully",
@@ -15,9 +15,9 @@ exports.todos = async (req, res) => {
 };
 
 // SHOW DETAIL ONE DATA
-exports.findById = async (req, res) => {a
+exports.getUserById = async (req, res) => {
     try {
-        const response = await Todo.findOne({ where: { id: req.params.id } });
+        const response = await User.findOne({ where: { id: req.params.id } });
         if (!response) {
             return res.status(404).json({ status: "404", message: "Data not found" });
         }
@@ -32,11 +32,15 @@ exports.findById = async (req, res) => {a
 };
 
 // SAVE NEW DATA
-exports.store = async (req, res) => {
+exports.createUser = async (req, res) => {
     try {
-        const response = await Todo.create({
-            title: req.body.title,
-            description: req.body.description,
+        const response = await User.create({
+            username: req.body.username,
+            fullName: req.body.fullName,
+            jurusan: req.body.jurusan,
+            kelas: req.body.kelas,
+            nisn: req.body.nisn,
+            tahunLulus: req.body.tahunLulus // Format: YYYY-MM-DD
         });
         res.status(201).json({
             status: "201",
@@ -49,12 +53,16 @@ exports.store = async (req, res) => {
 };
 
 // UPDATE DATA
-exports.update = async (req, res) => {
+exports.updateUser = async (req, res) => {
     try {
-        const response = await Todo.update(
+        const response = await User.update(
             {
-                title: req.body.title,
-                description: req.body.description,
+                username: req.body.username,
+                fullName: req.body.fullName,
+                jurusan: req.body.jurusan,
+                kelas: req.body.kelas,
+                nisn: req.body.nisn,
+                tahunLulus: req.body.tahunLulus
             },
             { where: { id: req.params.id } }
         );
@@ -73,9 +81,9 @@ exports.update = async (req, res) => {
 };
 
 // DELETE DATA
-exports.delete = async (req, res) => {
+exports.deleteUser = async (req, res) => {
     try {
-        const response = await Todo.destroy({ where: { id: req.params.id } });
+        const response = await User.destroy({ where: { id: req.params.id } });
 
         if (response === 0) {
             return res.status(404).json({ status: "404", message: "Data not found" });
